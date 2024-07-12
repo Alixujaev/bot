@@ -69,7 +69,7 @@ bot.on('message', (msg) => {
   });
 });
 
-bot.onText(/\/javob (.+) (.+)/, async (msg, match) => {
+bot.onText(/\/javob (\S+) (.+)/, async (msg, match) => {
   const chatId = msg.chat.id;
   const questionId = match[1];
   const answer = match[2];
@@ -97,6 +97,7 @@ bot.onText(/\/javob (.+) (.+)/, async (msg, match) => {
     bot.sendMessage(chatId, "Javobni yuborishda xatolik yuz berdi.");
   }
 });
+
 
 bot.onText(/\/questions/, (msg) => {
   const chatId = msg.chat.id;
