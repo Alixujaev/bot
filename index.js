@@ -134,3 +134,28 @@ bot.onText(/\/questions/, (msg) => {
       bot.sendMessage(chatId, "Savollarni olishda xatolik yuz berdi.");
     });
 });
+
+bot.onText(/\/delete (.+)/, async (msg, match) => {
+  const chatId = msg.chat.id;
+  const questionId = match[1];
+
+  if (!admins.includes(chatId)) {
+    bot.sendMessage(chatId, "Bu buyruq faqat adminlar uchun.");
+    return;
+  }
+
+  try {
+    const question = await Question.findByIdAndDelete(questionId);
+    if (!question) {
+      bot.sendMessage(chatId, "Savol topilmadi.");
+      return;
+    }
+
+    console.log(question);
+
+    bot.sendMessage(chatId, "Savol o'chirildi.");
+  } catch (error) {
+    console.error('Error deleting question:', err);
+      bot.sendMessage(chatId, "Savol o'chirishda xatolik yuz berdi.");
+  }
+})
